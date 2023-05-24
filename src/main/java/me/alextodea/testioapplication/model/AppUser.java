@@ -15,6 +15,7 @@ public class AppUser {
     @Id @GeneratedValue
     private Long id;
     private String authProviderId;
+    private AppUserRole role;
     @OneToMany(mappedBy = "submitter", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<InstructorRequest> instructorRequests;
@@ -22,6 +23,7 @@ public class AppUser {
     public AppUser(String authProviderId) {
         this.authProviderId = authProviderId;
         this.instructorRequests = new ArrayList<>();
+        this.role = AppUserRole.USER;
     }
 
     public void addInstructorRequest(InstructorRequest request) {
