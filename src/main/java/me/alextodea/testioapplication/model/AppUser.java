@@ -1,9 +1,7 @@
 package me.alextodea.testioapplication.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +15,8 @@ public class AppUser {
     @Id @GeneratedValue
     private Long id;
     private String authProviderId;
-    @OneToMany
+    @OneToMany(mappedBy = "submitter", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<InstructorRequest> instructorRequests;
 
     public AppUser(String authProviderId) {
