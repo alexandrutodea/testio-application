@@ -25,7 +25,6 @@ Our AST-based plagiarism detector can identify more instances of plagiarism than
 ## Features
 
 - Programming exercise creation
-- Instant exercise solution feedback
 - Plagiarism detector for student solution submissions
 - OAuth 2.0 authorization
 
