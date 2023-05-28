@@ -11,15 +11,16 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 public class InstructorRequest {
-
     @Id @GeneratedValue
     private Long id;
     private String instructorRequestText;
     @ManyToOne
     private AppUser submitter;
+    private boolean approved;
 
     public InstructorRequest(String instructorRequestText, AppUser submitter) {
         this.instructorRequestText = instructorRequestText;
         this.submitter = submitter;
+        this.approved = false;
     }
 }

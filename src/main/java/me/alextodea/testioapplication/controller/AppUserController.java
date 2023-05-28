@@ -1,61 +1,49 @@
 package me.alextodea.testioapplication.controller;
 
-import jakarta.validation.Valid;
-import me.alextodea.testioapplication.dto.InstructorRequestDto;
-import me.alextodea.testioapplication.exception.UserInstructorOrHigherException;
 import me.alextodea.testioapplication.model.AppUser;
-import me.alextodea.testioapplication.model.AppUserRole;
-import me.alextodea.testioapplication.model.InstructorRequest;
-import me.alextodea.testioapplication.repository.AppUserRepository;
+import me.alextodea.testioapplication.service.AppUserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 public class AppUserController {
 
-    private AppUserRepository appUserRepository;
+    private AppUserService appUserService;
 
-    public AppUserController(AppUserRepository appUserRepository) {
-        this.appUserRepository = appUserRepository;
+    public AppUserController(AppUserService appUserService) {
+        this.appUserService = appUserService;
     }
 
-    @PostMapping("/api/requests")
-    public InstructorRequest createRequest(@AuthenticationPrincipal OidcUser principal,
-                                           @Valid @RequestBody InstructorRequestDto instructorRequestDto) {
-
-
-        String sub = principal.getAttribute("sub");
-
-        Optional<AppUser> appUserOptional = appUserRepository.findByAuthProviderId("sub");
-
-        AppUser appUser;
-
-        if (appUserOptional.isPresent()) {
-
-            appUser = appUserOptional.get();
-            if (appUser.getRole() == AppUserRole.ADMIN || appUser.getRole() == AppUserRole.INSTRUCTOR) {
-                throw new UserInstructorOrHigherException("User is already an instructor or higher");
-            }
-
-        } else {
-
-            appUser = new AppUser(sub);
-
-        }
-
-        String requestText = instructorRequestDto.getInstructorRequestText();
-        InstructorRequest instructorRequest = new InstructorRequest(requestText, appUser);
-        appUser.addInstructorRequest(instructorRequest);
-
-        appUserRepository.save(appUser);
-
-        return instructorRequest;
-
+    @GetMapping("/api/account")
+    public AppUser accountInformation(@AuthenticationPrincipal OidcUser principal) {
+        return appUserService.accountInformation(principal);
     }
 
+    @PutMapping("/api/account/reset")
+    public AppUser resetProgress(@AuthenticationPrincipal OidcUser principal) {
+        return appUserService.resetProgress(principal);
+    }
+
+    @GetMapping("/api/users")
+    public List<AppUser> getAppUsers(@AuthenticationPrincipal OidcUser principal) {
+        return appUserService.getAppUsers(principal);
+    }
+
+    @DeleteMapping("/api/users/{id}/remove")
+    public void removeAppUser(@PathVariable Long id, @AuthenticationPrincipal OidcUser oidcUser) {
+        appUserService.removeUser(id, oidcUser);
+    }
+
+    @PutMapping("/api/users/{id}/demote")
+    public AppUser demoteAppUser(@PathVariable Long id, @AuthenticationPrincipal OidcUser oidcUser) {
+        return appUserService.demoteUser(id, oidcUser);
+    }
+
+    @PutMapping("/api/users/{id}/promote")
+    public AppUser promoteAppUser(@PathVariable Long id, @AuthenticationPrincipal OidcUser oidcUser) {
+        return appUserService.promoteUser(id, oidcUser);
+    }
 }
