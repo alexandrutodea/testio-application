@@ -1,6 +1,8 @@
 package me.alextodea.testioapplication.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.javaparser.StaticJavaParser;
+import com.github.javaparser.ast.CompilationUnit;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,4 +25,9 @@ public class Submission {
         this.exercise = exercise;
         this.solution = solution;
     }
+
+    public CompilationUnit getSolutionCompilationUnit() {
+        return StaticJavaParser.parse(solution);
+    }
+
 }
