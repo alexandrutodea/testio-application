@@ -10,9 +10,6 @@ import me.alextodea.testioapplication.plagiarism.*;
 import me.alextodea.testioapplication.repository.AppUserRepository;
 import me.alextodea.testioapplication.repository.ExerciseRepository;
 import me.alextodea.testioapplication.repository.SubmissionRepository;
-import me.alextodea.testioapplication.thymeleaf.bootstrap.model.paging.Page;
-import me.alextodea.testioapplication.thymeleaf.bootstrap.model.paging.Paged;
-import me.alextodea.testioapplication.thymeleaf.bootstrap.model.paging.Paging;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 
