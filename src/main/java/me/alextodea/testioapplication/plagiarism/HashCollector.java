@@ -378,7 +378,7 @@ public class HashCollector extends VoidVisitorAdapter<List<String>> {
     @Override
     public void visit(SuperExpr superExpr, List<String> collector) {
         super.visit(superExpr, collector);
-        collector.add("ReturnStmt");
+        collector.add("SuperExpr");
     }
 
     @Override
