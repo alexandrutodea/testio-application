@@ -78,8 +78,7 @@ public class HashCollector extends VoidVisitorAdapter<List<String>> {
 
     @Override
     public void visit(BlockStmt blockStmt, List<String> collector) {
-        super.visit(blockStmt, collector);
-        collector.add("BlockStmt");
+        //ignore
     }
 
     @Override
