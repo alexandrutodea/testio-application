@@ -10,7 +10,7 @@ public class Utils {
 
     public static Map<String, Integer> getSubtreeNodeFrequency(Node subtree) {
 
-        HashCollector nodeCollector = new HashCollector();
+        NodeCollector nodeCollector = new NodeCollector();
         Map<String, Integer> subtreeNodeFrequency = new HashMap<>();
         List<String> subtreeNodes = new ArrayList<>();
         subtree.accept(nodeCollector, subtreeNodes);
